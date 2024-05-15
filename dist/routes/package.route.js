@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const package_controller_1 = require("../controllers/package.controller");
+const validate_middleware_1 = require("../middlewares/validate-middleware");
+const package_schema_1 = require("../schemas/package.schema");
+const router = (0, express_1.Router)();
+router.post("/package", (0, validate_middleware_1.validateBodyParams)(package_schema_1.createPayloadSchema, false), package_controller_1.createPackageController);
+router.patch("/package/:id", (0, validate_middleware_1.validatePathParams)(package_schema_1.updatePayloadSchema, false), package_controller_1.updatePackageController);
+router.get("/package/:trackingId", (0, validate_middleware_1.validatePathParams)(package_schema_1.trackPayloadSchema, false), package_controller_1.trackPackage);
+exports.default = router;
