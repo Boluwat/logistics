@@ -1,5 +1,7 @@
 import { Express } from "express";
-import { userRoute, packageRoute } from ".";
+import { userRoute, 
+    packageRoute 
+} from ".";
 
 export default (app: Express) =>{
     app.use("/api", userRoute);

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { loginController, signUpController } from "../controllers/user.controllers";
-import { validateBodyParams } from "../middlewares/validate-middleware";
-import { createPayloadSchema, loginPayloadSchema } from "../schemas/users.schema";
+import { activateUserController, loginController, signUpController } from "../controllers/user.controllers";
+import { validateBodyParams, validatePathParams } from "../middlewares/validate-middleware";
+import { activateUserSchema, createPayloadSchema, loginPayloadSchema } from "../schemas/users.schema";
 
 const router = Router();
 
@@ -16,6 +16,12 @@ router.post(
   validateBodyParams(loginPayloadSchema, false),
   loginController
 );
+
+router.get(
+  "/users/activate/:userId",
+  validatePathParams(activateUserSchema, false),
+  activateUserController
+)
 
 
 export default router;

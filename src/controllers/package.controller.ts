@@ -2,12 +2,14 @@ import { Request, Response } from "express";
 import logger from "../utils/logger";
 import { formatResponse } from "../utils/response-format";
 import {
-  createPackageService,
-  updatePackageService,
-  trackPackagesService,
+ createShipmentService,
+ trackPackagesService,
+ updateShipmentService,
 } from "../services/packages.service";
 import { verify } from "../utils/tokenizer";
 import { IUserLoginTokenDTO } from "../interfaces";
+import mongoose from "mongoose";
+import constants from "../utils/constants";
 
 export const createPackageController = async (req: Request, res: Response) => {
   try {
@@ -25,9 +27,9 @@ export const createPackageController = async (req: Request, res: Response) => {
         .json(formatResponse({ isSuccess: false, message: "Unauthorized" }));
     }
 
-    const currentUser = { id: payload.id };
+    const currentUser = new mongoose.Types.ObjectId(payload.id);
 
-    const response = await createPackageService(req.body, currentUser);
+    const response = await createShipmentService(req.body, currentUser);
 
     if (!response.isSuccess) {
       return res.status(400).json(response);
@@ -37,7 +39,7 @@ export const createPackageController = async (req: Request, res: Response) => {
     logger.error(err);
     return res
       .status(400)
-      .json(formatResponse({ message: "You just hit a break wall" }));
+      .json(formatResponse({ message: constants.errorMessage.default }));
   }
 };
 
@@ -50,9 +52,9 @@ export const updatePackageController = async (req: Request, res: Response) => {
       return res.status(400).json(validationResponse);
     }
 
-    const packageId = Number(req.params.id);
+    const packageId = req.params.id;
 
-    const response = await updatePackageService(req.body, packageId);
+    const response = await updateShipmentService(req.body, packageId);
 
     if (!response.isSuccess) {
       return res.status(400).json(response);
@@ -62,20 +64,12 @@ export const updatePackageController = async (req: Request, res: Response) => {
     logger.error(err);
     return res
       .status(400)
-      .json(formatResponse({ message: "You just hit a break wall" }));
+      .json(formatResponse({ message: constants.errorMessage.default }));
   }
 };
 
 export const trackPackage = async (req: Request, res: Response) => {
   try {
-    const authorizationHeader = req.headers["authorization"];
-    const validationResponse = verify(authorizationHeader);
-
-    if (!validationResponse.isSuccess) {
-      return res.status(400).json(validationResponse);
-    }
-   
-
     const response = await trackPackagesService(req.params.trackingId);
 
     if (!response.isSuccess) {
@@ -86,6 +80,6 @@ export const trackPackage = async (req: Request, res: Response) => {
     logger.error(err);
     return res
       .status(400)
-      .json(formatResponse({ message: "You just hit a break wall" }));
+      .json(formatResponse({ message: constants.errorMessage.default }));
   }
 };

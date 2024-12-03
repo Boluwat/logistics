@@ -38,6 +38,12 @@ export const updatePayloadSchema = object({
   }).optional(),
 });
 
+export const activateUserSchema = object({
+  userId: string({
+    required_error: "User Id is required"
+  })
+});
+
 export type CreateOnboardingInput = TypeOf<typeof createPayloadSchema>;
 export type UpdateUserInput = TypeOf<typeof updatePayloadSchema>;
 export type LoginUserInput = TypeOf<typeof loginPayloadSchema>;

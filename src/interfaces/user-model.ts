@@ -1,4 +1,16 @@
+import mongoose, {Document} from 'mongoose';
 
+
+export interface IUserDocument extends Document {
+  email: string;
+  phone: string;
+  firstname: string;
+  lastname: string;
+  password: string;
+  isActivated: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
 
 export interface ICreateUserDTO {
   firstname: string;
@@ -8,8 +20,11 @@ export interface ICreateUserDTO {
   password: string;
 }
 export interface IUserDTO {
-  id: number;
+  id: string;
+  createdAt: string;
+  updatedAt: string;
   firstname: string;
+  isActivated: boolean;
   lastname: string;
   email: string;
   phone?: string;
@@ -31,7 +46,7 @@ export interface IUserLoginDTO {
 }
 
 export interface IUserLoginTokenDTO {
-  id: number;
+  id: string;
   firstname: string;
   lastname: string;
   email: string;

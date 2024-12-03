@@ -1,16 +1,16 @@
 import { Application } from "express";
 import config from "./utils/config";
 import logger from "./utils/logger";
-import { connectDatabase } from "./utils/database";
+import { initDB } from "./utils/database";
 import BootstrapServer from "./utils/bootstrap";
-import './utils/cronjob';
+// import './utils/cronjob';
 
 async function startServer() {
   const app: Application = BootstrapServer();
   const port = config.port;
 
   try {
-      await connectDatabase();
+      await initDB();
       const server = app.listen(port, () => {
           logger.info(`Server is running on port ${port}`);
       });

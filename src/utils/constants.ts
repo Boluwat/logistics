@@ -1,13 +1,16 @@
 export default Object.freeze({
     errorMessage: {
-      default: "You just hit a break wall",
+      default: "Something went wrong! Kindly report this issue!",
       invalidLoginMessage: 'Email/Password is invalid',
       limitPageMessage: 'Values of page and limit should be greater than 0',
-      invalidUser: 'Unable to update user',
+      invalidUser: 'Unable to activate user',
       exist: 'Record Exist',
       notExist: 'Record Does Not Exist',
       Unauthorized: 'Unauthorized',
-      success: 'success'
+      success: 'success',
+      notActivated: 'Account Is Not Activated',
+      missingDimension: 'Items missing Dimensions',
+      invalidCountry: 'Invalid Country'
     },
     status: {
       active: 'ACTIVE',
